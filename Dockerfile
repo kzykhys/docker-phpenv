@@ -38,6 +38,7 @@ RUN cd /home/php; \
 # RUN su php -c "phpenv install 5.3"
 
 ENV HOME /home/php
+ENV PATH /home/php/.phpenv/shims:/home/php/.phpenv/bin:$PATH
 
 USER php
 WORKDIR /home/php
