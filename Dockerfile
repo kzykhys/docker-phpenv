@@ -15,7 +15,7 @@ RUN apt-get install -y git
 
 # install dependencies
 RUN apt-get install -y build-essential libxml2-dev libssl-dev \
-    libcurl4-gnutls-dev libjpeg-dev libpng12-dev \
+    libcurl4-gnutls-dev libjpeg-dev libpng12-dev libmcrypt-dev \
     libreadline-dev libtidy-dev libxslt1-dev autoconf \
     re2c bison
 
@@ -36,6 +36,8 @@ RUN cd /home/php; \
 # RUN su php -c "phpenv install 5.5"
 # RUN su php -c "phpenv install 5.4"
 # RUN su php -c "phpenv install 5.3"
+
+ENV HOME /home/php
 
 USER php
 WORKDIR /home/php
