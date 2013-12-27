@@ -35,4 +35,9 @@ RUN mkdir /home/php/.phpenv/plugins; \
     cd /home/php/.phpenv/plugins; \
     git clone https://github.com/CHH/php-build.git
 
+# php-build-plugin-phpunit
+RUN curl -o /home/php/.phpenv/plugins/php-build/share/php-build/after-install.d/phpunit \
+    https://raw.github.com/CHH/php-build-plugin-phpunit/master/share/php-build/after-install.d/phpunit
+RUN chmod +x /home/php/.phpenv/plugins/php-build/share/php-build/after-install.d/phpunit
+
 ENV PATH /home/php/.phpenv/shims:/home/php/.phpenv/bin:$PATH
