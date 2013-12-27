@@ -19,26 +19,20 @@ RUN apt-get install -y build-essential libxml2-dev libssl-dev \
     libreadline-dev libtidy-dev libxslt1-dev autoconf \
     re2c bison
 
-# Add php user
+# add php user
 RUN adduser --disabled-login --gecos 'PHP' php
 
-# install phpenv
-RUN cd /home/php; \
-    su php -c "curl https://raw.github.com/CHH/phpenv/master/bin/phpenv-install.sh | bash"; \
-    echo 'export PATH="/home/php/.phpenv/bin:$PATH"' >> /home/php/.bashrc; \
-    echo 'eval "$(phpenv init -)"' >> /home/php/.bashrc; \
-    cd /home/php/.phpenv; \
-    su php -c "mkdir plugins"; \
-    cd /home/php/.phpenv/plugins; \
-    su php -c "git clone https://github.com/CHH/php-build.git"
-
-# install php
-# RUN su php -c "phpenv install 5.5"
-# RUN su php -c "phpenv install 5.4"
-# RUN su php -c "phpenv install 5.3"
-
-ENV HOME /home/php
-ENV PATH /home/php/.phpenv/shims:/home/php/.phpenv/bin:$PATH
-
+# switch user to php
 USER php
+ENV HOME /home/php
 WORKDIR /home/php
+
+# install phpenv
+RUN curl https://raw.github.com/CHH/phpenv/master/bin/phpenv-install.sh | bash
+RUN echo 'export PATH="/home/php/.phpenv/bin:$PATH"' >> /home/php/.bashrc
+RUN echo 'eval "$(phpenv init -)"' >> /home/php/.bashrc
+RUN mkdir /home/php/.phpenv/plugins; \
+    cd /home/php/.phpenv/plugins; \
+    git clone https://github.com/CHH/php-build.git
+
+ENV PATH /home/php/.phpenv/shims:/home/php/.phpenv/bin:$PATH
